@@ -49,6 +49,7 @@ vim.api.nvim_set_keymap("i", "<Up>", "<Nop>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Left>", "<Nop>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Right>", "<Nop>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("i", "<Down>", "<Nop>", { noremap = true, silent = true })
+
 -- Disable vim-cmp Up and Down selection
 cmp.setup({
   mapping = {
@@ -67,12 +68,16 @@ cmp.setup({
   },
 })
 
-
 -- Define a command named "ToggleTransparency"
 vim.api.nvim_create_user_command('ToggleTransparency', 'lua require("base46").toggle_transparency()', {})
 
 -- Map the <leader>tt key to the ToggleTransparency command
 vim.api.nvim_set_keymap("n", "<leader>tt", ":ToggleTransparency<CR>", { noremap = true, silent = true })
+
+
+-- Define a command named "ToggleTransparency"
+vim.api.nvim_create_user_command('ToggleTheme', 'lua require("base46").toggle_theme()', {})
+vim.api.nvim_set_keymap("n", "<leader>ts", ":ToggleTheme<CR>", { noremap = true, silent = true })
 
 -- Toggle Dashboard
 vim.api.nvim_set_keymap("n", "<leader>dd", ":Nvdash<CR>", { noremap = true, silent = true })
@@ -88,12 +93,14 @@ vim.api.nvim_set_keymap("n", "G", "Gzz", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "d", '"_d', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "dd", '"_dd', { noremap = true, silent = true })
 
--- Paste using default paste (it won't override the black hole)
-vim.api.nvim_set_keymap("n", "p", "p", { noremap = true, silent = true })
+-- Paste without saving to the default register
+vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true, silent = true })
 
 -- Yank and delete without affecting the default register
 vim.api.nvim_set_keymap("n", "yd", 'yy"_d', { noremap = true, silent = true })
 
 -- Select All
-vim.api.nvim_set_keymap("n", "<C-w>a", ":%y+<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-w>a", "ggVG", { noremap = true, silent = true })
 
+-- Jump annoying closing auto pairs
+vim.api.nvim_set_keymap("i", "jl", "<ESC>la", { noremap = true, silent = true })
