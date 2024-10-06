@@ -96,11 +96,31 @@ vim.api.nvim_set_keymap("n", "dd", '"_dd', { noremap = true, silent = true })
 -- Paste without saving to the default register
 vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true, silent = true })
 
--- Yank and delete without affecting the default register
-vim.api.nvim_set_keymap("n", "yd", 'yy"_d', { noremap = true, silent = true })
+-- Define a Lua function to yank and delete the current line
+function YankAndDelete()
+  -- Yank the current line into the default register
+  vim.cmd('normal! yy')
+  -- Delete the current line into the black hole register
+  vim.cmd('normal! "_dd')
+end
+
+-- Set the key mapping to call the function with the 'yd' keys in normal mode
+vim.api.nvim_set_keymap('n', 'yd', ':lua YankAndDelete()<CR>', { noremap = true, silent = true })
 
 -- Select All
 vim.api.nvim_set_keymap("n", "<C-w>a", "ggVG", { noremap = true, silent = true })
 
 -- Jump annoying closing auto pairs
 vim.api.nvim_set_keymap("i", "jl", "<ESC>la", { noremap = true, silent = true })
+
+-- Remap Shift + < and Shift + > to wait for more input
+vim.api.nvim_set_keymap('x', '>', [[:execute "normal! " . v:count1 . ">>"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<', [[:execute "normal! " . v:count1 . "<<"<CR>]], { noremap = true, silent = true })
+
+-- For visual mode mappings, use the following for line indenting
+vim.api.nvim_set_keymap('v', '>', [[:normal! >gv]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<', [[:normal! <gv]], { noremap = true, silent = true })
+
+-- Map O and o to create a new line above or below the current line and stay in normal mode
+vim.api.nvim_set_keymap('n', 'O', ':execute \'normal! O\'<CR>', { noremap = true, silent = true }) -- New line above
+vim.api.nvim_set_keymap('n', 'o', ':execute \'normal! o\'<CR>', { noremap = true, silent = true }) -- New line below

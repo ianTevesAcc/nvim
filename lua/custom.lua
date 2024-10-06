@@ -45,4 +45,3 @@ end
 
 -- Create a command named Cppath
 vim.api.nvim_create_user_command("Cppath", copy_file_path, {})
-
