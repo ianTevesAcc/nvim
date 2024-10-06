@@ -111,7 +111,7 @@ vim.api.nvim_set_keymap('n', 'yd', ':lua YankAndDelete()<CR>', { noremap = true,
 vim.api.nvim_set_keymap("n", "<C-w>a", "ggVG", { noremap = true, silent = true })
 
 -- Jump annoying closing auto pairs
-vim.api.nvim_set_keymap("i", "jl", "<ESC>la", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("i", "jj", "<ESC>la", { noremap = true, silent = true })
 
 -- Remap Shift + < and Shift + > to wait for more input
 vim.api.nvim_set_keymap('x', '>', [[:execute "normal! " . v:count1 . ">>"<CR>]], { noremap = true, silent = true })
@@ -124,3 +124,6 @@ vim.api.nvim_set_keymap('v', '<', [[:normal! <gv]], { noremap = true, silent = t
 -- Map O and o to create a new line above or below the current line and stay in normal mode
 vim.api.nvim_set_keymap('n', 'O', ':execute \'normal! O\'<CR>', { noremap = true, silent = true }) -- New line above
 vim.api.nvim_set_keymap('n', 'o', ':execute \'normal! o\'<CR>', { noremap = true, silent = true }) -- New line below
+
+-- unmape ; to : normal mode escape
+vim.api.nvim_del_keymap('n', ';')

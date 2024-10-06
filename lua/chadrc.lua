@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "tokyodark",
+  theme = "tokyonight",
   theme_toggle = { "tokyodark", "tokyonight" },
   nvdash = { load_on_startup = true },
 
