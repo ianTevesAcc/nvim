@@ -45,3 +45,19 @@ end
 
 -- Create a command named Cppath
 vim.api.nvim_create_user_command("Cppath", copy_file_path, {})
+
+-- Function to close the current buffer and delete unnamed buffers
+function CloseBuffer()
+  local current_buffer = vim.api.nvim_get_current_buf()
+  -- Close the buffer
+  vim.cmd('bd')
+
+  -- Check if the buffer is unnamed and delete it
+  local bufnr = vim.fn.bufnr('%')
+  if vim.fn.bufname(bufnr) == '' then
+    vim.cmd('bd ' .. bufnr)
+  end
+end
+
+-- Map the function to a command
+vim.api.nvim_create_user_command('CloseBuf', CloseBuffer, {})

@@ -132,4 +132,4 @@ vim.api.nvim_del_keymap('n', ';')
 vim.api.nvim_del_keymap('n', '<C-c>')
 
 -- close buffers quick
--- vim.api.nvim_set_keymap("n", "<C-w>b", ":bd<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>q', ':lua CloseBuffer()<CR>', { noremap = true, silent = true })
