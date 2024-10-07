@@ -125,5 +125,8 @@ vim.api.nvim_set_keymap('v', '<', [[:normal! <gv]], { noremap = true, silent = t
 vim.api.nvim_set_keymap('n', 'O', ':execute \'normal! O\'<CR>', { noremap = true, silent = true }) -- New line above
 vim.api.nvim_set_keymap('n', 'o', ':execute \'normal! o\'<CR>', { noremap = true, silent = true }) -- New line below
 
--- unmape ; to : normal mode escape
+-- unmap ; to : normal mode escape
 vim.api.nvim_del_keymap('n', ';')
+
+-- unmap <C-c> to copy all in text file
+vim.api.nvim_del_keymap('n', '<C-c>')

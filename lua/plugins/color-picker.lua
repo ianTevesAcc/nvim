@@ -7,6 +7,10 @@ return {
     vim.keymap.set("n", "<C-c>", "<cmd>PickColor<cr>", opts)
     vim.keymap.set("i", "<C-c>", "<cmd>PickColorInsert<cr>", opts)
 
+    vim.keymap.set("n", "<leader>cp", "<cmd>PickColor<cr>", opts)
+    vim.keymap.set("i", "<leader>cp", "<cmd>PickColorInsert<cr>", opts)
+
+
     -- Optional key mappings for conversions
     -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandRGB<cr>", opts)
     -- vim.keymap.set("n", "your_keymap", "<cmd>ConvertHEXandHSL<cr>", opts)
@@ -33,5 +37,5 @@ return {
     -- Customize the FloatBorder color
     vim.cmd([[hi FloatBorder guibg=NONE]]) -- Removes any background color from the popup border.
   end,
+  lazy = false,
 }
-
