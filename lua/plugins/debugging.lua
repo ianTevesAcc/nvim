@@ -1,14 +1,23 @@
 return {
   {
+    "williamboman/mason.nvim",
     "mfussenegger/nvim-dap",
+    "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/neotest",
       "nvim-neotest/nvim-nio",
+      {
+        "leolux/nvim-dap-go",
+        ft = "go",
+        config = function()
+          require("dap-go").setup()
+        end,
+      }
     },
 
     -- Use ft to trigger the loading on specific file types
-    ft = { "go", "rust", "cpp", "c" },
+    ft = { "rust", "cpp", "c" },
 
     config = function()
       local dap = require('dap')

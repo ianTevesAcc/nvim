@@ -33,9 +33,6 @@ return {
       ["border_highlight_group"] = "FloatBorder", -- default
       ["text_highlight_group"] = "Normal", -- default
     })
-
-    -- Customize the FloatBorder color
-    vim.cmd([[hi FloatBorder guibg=NONE]]) -- Removes any background color from the popup border.
   end,
-  lazy = false,
+  lazy = 'VeryLazy',
 }

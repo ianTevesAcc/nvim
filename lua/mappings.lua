@@ -130,3 +130,6 @@ vim.api.nvim_del_keymap('n', ';')
 
 -- unmap <C-c> to copy all in text file
 vim.api.nvim_del_keymap('n', '<C-c>')
+
+-- close buffers quick
+-- vim.api.nvim_set_keymap("n", "<C-w>b", ":bd<CR>", { noremap = true, silent = true })
