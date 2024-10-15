@@ -3,26 +3,35 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
   },
-  config = function()  -- Add parentheses after function
-    require'nvim-treesitter.configs'.setup {  -- Call the setup function
+  lazy = 'VeryLazy',
+
+  config = function()                         -- Add parentheses after function
+    require 'nvim-treesitter.configs'.setup { -- Call the setup function
       ensure_installed = {
         "bash",
-        "html",
-        "javascript",
+        "sql",
+        "go",
         "json",
+        "jsonc",
         "lua",
         "markdown",
         "markdown_inline",
         "latex",
+        "java",
+        "cpp",
+        "csv",
         "python",
         "query",
         "regex",
         "tsx",
-        "typescript",
         "vim",
         "yaml",
+        "dockerfile",
         "vimdoc",
+        "html",
         "css",
+        "javascript",
+        "typescript",
       },
       highlight = { enable = true },
       indent = { enable = true },

@@ -19,7 +19,7 @@ cmp.setup({
   mapping = {
     ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Use <Tab> to confirm completion
     ["<CR>"] = cmp.mapping(function(fallback)
-      fallback() -- Prevent <Enter> from confirming the completion
+      fallback()                                        -- Prevent <Enter> from confirming the completion
     end, { "i", "s" }),
   },
 })
@@ -133,3 +133,34 @@ vim.api.nvim_del_keymap('n', '<C-c>')
 
 -- close buffers quick
 vim.api.nvim_set_keymap('n', '<leader>q', ':lua CloseBuffer()<CR>', { noremap = true, silent = true })
+
+-- close nvim quick
+vim.api.nvim_set_keymap('n', '<leader>Q', ':q<CR>', { noremap = true, silent = true })
+
+-- set X to delete character its on
+vim.api.nvim_set_keymap('n', 'X', '"_x', { noremap = true, silent = true })
+
+-- Define the function for folding based on indentation
+function _G.fold_with_indent_range()
+  local cur_line = vim.fn.line(".")          -- Get the current line number
+  local cur_indent = vim.fn.indent(cur_line) -- Get the current line's indent
+
+  -- Find the top of the fold
+  local top_line = cur_line
+  while top_line > 1 and vim.fn.indent(top_line - 1) >= cur_indent do
+    top_line = top_line - 1
+  end
+
+  -- Find the bottom of the fold
+  local bottom_line = cur_line
+  local last_line = vim.fn.line("$") -- Get total number of lines in file
+  while bottom_line < last_line and vim.fn.indent(bottom_line + 1) >= cur_indent do
+    bottom_line = bottom_line + 1
+  end
+
+  -- Create fold from top_line to bottom_line
+  vim.cmd(string.format("%d,%dfold", top_line, bottom_line))
+end
+
+-- Mapping to use zf for this custom fold behavior
+vim.api.nvim_set_keymap('n', 'zf', ':lua fold_with_indent_range()<CR>', { noremap = true, silent = true })

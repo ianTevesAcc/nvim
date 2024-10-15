@@ -1,5 +1,5 @@
 -- etpos('.', save_cursor)tpos('.', save_cursor)- Enable both relative and absolute line numbers
-vim.wo.number = true -- Show absolute line number
+vim.wo.number = true         -- Show absolute line number
 vim.wo.relativenumber = true -- Show relative line numbers
 
 -- Change local directory on buffer enter
@@ -26,8 +26,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function()
     local cursor_pos = vim.fn.getpos "." -- Save current cursor position
     vim.cmd "silent !black --quiet %"
-    vim.cmd "edit" -- Reloads the buffer
-    vim.fn.setpos(".", cursor_pos) -- Restore the cursor position
+    vim.cmd "edit"                       -- Reloads the buffer
+    vim.fn.setpos(".", cursor_pos)       -- Restore the cursor position
   end,
 })
 

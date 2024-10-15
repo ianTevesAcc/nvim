@@ -1,5 +1,7 @@
 return {
   "ziontee113/color-picker.nvim",
+  lazy = 'VeryLazy',
+
   config = function()
     local opts = { noremap = true, silent = true }
 
@@ -34,5 +36,4 @@ return {
       ["text_highlight_group"] = "Normal", -- default
     })
   end,
-  lazy = 'VeryLazy',
 }

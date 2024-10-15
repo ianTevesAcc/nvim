@@ -7,7 +7,8 @@ return {
     "catppuccin/nvim",
   },
   enabled = true,
-  lazy = false,
+  lazy = 'VeryLazy',
+
   opts = {
     -- you can set different blend values for your different modes.
     -- Some colours might look better more dark, so set a higher value
@@ -57,4 +58,3 @@ return {
     },
   },
 }
-
