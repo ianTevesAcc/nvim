@@ -1,24 +1,22 @@
 local dap = require "dap"
 
--- Use the cppdbg adapter for Rust debugging
 dap.adapters.cppdbg = {
   id = "cppdbg",
   type = "executable",
-  command = "/home/ian/9 files/debuggers/CC++Rust(codelldb)/debugAdapters/bin/OpenDebugAD7.exe",
+  command = "/home/ian/9 files/debuggers/vscode-cpptools-1.22.11(patch-update)/debugAdapters/bin/OpenDebugAD7",
 }
 
--- Configure Rust debugging with multiple options
-dap.configurations.rust = {
-  -- 1: Launch without Arguments
+dap.configurations.cpp = {
+  -- 1: Debug without arguments
   {
-    name = "Launch Rust",
+    name = "Debug",
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     cwd = "${workspaceFolder}",
-    stopAtEntry = false,
+    stopAtEntry = true,
     setupCommands = {
       {
         text = "-enable-pretty-printing",
@@ -26,18 +24,19 @@ dap.configurations.rust = {
         ignoreFailures = false,
       },
     },
+    miDebuggerPath = "/usr/bin/gdb",
   },
 
-  -- 2: Launch with Arguments
+  -- 2: Debug with Arguments
   {
-    name = "Launch Rust (Arguments)",
+    name = "Debug (Arguments)",
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     cwd = "${workspaceFolder}",
-    stopAtEntry = false,
+    stopAtEntry = true,
     args = function()
       return vim.fn.split(vim.fn.input "Arguments: ", " ")
     end,
@@ -50,16 +49,16 @@ dap.configurations.rust = {
     },
   },
 
-  -- 3: Launch with Arguments and Build Flags
+  -- 3: Debug with Arguments and Build Flags
   {
-    name = "Launch Rust (Arguments & Build Flags)",
+    name = "Debug (Arguments & Build Flags)",
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     cwd = "${workspaceFolder}",
-    stopAtEntry = false,
+    stopAtEntry = true,
     args = function()
       return vim.fn.split(vim.fn.input "Arguments: ", " ")
     end,
@@ -75,27 +74,55 @@ dap.configurations.rust = {
     },
   },
 
-  -- 4: Attach to gdbserver
+  -- 4: Debug Package (Folder)
+  {
+    name = "Debug Package",
+    type = "cppdbg",
+    request = "launch",
+    program = function()
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    end,
+    cwd = function()
+      return vim.fn.input("Path to package (folder): ", vim.fn.getcwd(), "dir")
+    end,
+    stopAtEntry = true,
+    setupCommands = {
+      {
+        text = "-enable-pretty-printing",
+        description = "Enable pretty printing",
+        ignoreFailures = false,
+      },
+    },
+  },
+
+  -- 5: Attach to running process (gdbserver)
   {
     name = "Attach to gdbserver :1234",
     type = "cppdbg",
-    request = "attach",
+    request = "launch",
     MIMode = "gdb",
     miDebuggerServerAddress = "localhost:1234",
     miDebuggerPath = "/home/linuxbrew/.linuxbrew/bin/gdb",
     cwd = "${workspaceFolder}",
     program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
+    setupCommands = {
+      {
+        text = "-enable-pretty-printing",
+        description = "Enable pretty printing",
+        ignoreFailures = false,
+      },
+    },
   },
 
-  -- 5: Debug Rust Test
+  -- 6: Debug Test (assuming you have a separate test executable)
   {
-    name = "Debug Rust Test",
+    name = "Debug Test",
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     cwd = "${workspaceFolder}",
     stopAtEntry = true,
@@ -108,25 +135,25 @@ dap.configurations.rust = {
     },
   },
 
-  -- 6: Debug Rust Test with Specific Options
+  -- 7: Debug test with specific go.mod or similar (can be customized for C++ test frameworks)
   {
-    name = "Debug Rust Test (Specific Flags)",
+    name = "Debug Test (Specific)",
     type = "cppdbg",
     request = "launch",
     program = function()
-      return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+      return vim.fn.input("Path to test executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     cwd = "${workspaceFolder}",
     stopAtEntry = true,
+    setupCommands = {
+      {
+        text = "-enable-pretty-printing",
+        description = "Enable pretty printing",
+        ignoreFailures = false,
+      },
+    },
     buildFlags = function()
-      return vim.fn.input "Enter build flags: "
+      return vim.fn.input "Enter specific flags: "
     end,
-    setupCommands = {
-      {
-        text = "-enable-pretty-printing",
-        description = "Enable pretty printing",
-        ignoreFailures = false,
-      },
-    },
   },
 }

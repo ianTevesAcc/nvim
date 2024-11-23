@@ -1,7 +1,7 @@
 return {
-  "rcarriga/nvim-dap-ui",
+  "mfussenegger/nvim-dap",
   dependencies = {
-    "mfussenegger/nvim-dap",
+    "rcarriga/nvim-dap-ui",
     "theHamsta/nvim-dap-virtual-text",
     "nvim-neotest/nvim-nio",
     "nvim-neotest/neotest",
@@ -15,7 +15,7 @@ return {
     local dap = require "dap"
     local dapui = require "dapui"
 
-    -- Hide secret tokens from display
+    -- Hide secret tokens from showing
     require("nvim-dap-virtual-text").setup {
       display_callback = function(variable)
         local name = string.lower(variable.name)
@@ -33,18 +33,37 @@ return {
       end,
     }
 
-    -- -- Automatically open/close dap-ui during the debug session
-    -- dap.listeners.before.attach.dapui_config = function()
-    --   dapui.open()
-    -- end
-    -- dap.listeners.before.launch.dapui_config = function()
-    --   dapui.open()
-    -- end
-    -- dap.listeners.before.event_terminated.dapui_config = function()
-    --   dapui.close()
-    -- end
-    -- dap.listeners.before.event_exited.dapui_config = function()
-    --   dapui.close()
+    -- toggle the following for debugging - (debug file  - ~/.cache/nvim/dap.log)
+    require("dap").set_log_level "TRACE"
+
+    -- Configure dap-ui with custom icons
+    dapui.setup {
+      icons = { expanded = "▼", collapsed = "➤", watch = "👁️" },
+    }
+
+    -- Highlight lines where breakpoints and stopped states occur
+    vim.api.nvim_command "highlight DapBreakpointLine guibg=#2E3440"
+    vim.api.nvim_set_hl(0, "DapBreakpointLine", { bg = "#2E3440" })
+    vim.api.nvim_command "highlight DapStoppedLine guibg=#3B4252"
+    vim.api.nvim_set_hl(0, "DapStoppedLine", { bg = "#3B4252" })
+
+    -- Automatically open/close dap-ui during the debug session
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+      dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+      dapui.close()
+    end
+    -- dap.listeners.after.event_terminated["dapui_config"] = nil
+    -- dap.listeners.after.event_exited["dapui_config"] = nil
+    -- dap.listeners.after.event_initialized["dapui_config"] = function()
+    --   pcall(dapui.open)
     -- end
 
     -- Define a local function for setting a watch

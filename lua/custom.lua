@@ -1,5 +1,5 @@
 -- etpos('.', save_cursor)tpos('.', save_cursor)- Enable both relative and absolute line numbers
-vim.wo.number = true         -- Show absolute line number
+vim.wo.number = true -- Show absolute line number
 vim.wo.relativenumber = true -- Show relative line numbers
 
 -- Change local directory on buffer enter
@@ -26,8 +26,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function()
     local cursor_pos = vim.fn.getpos "." -- Save current cursor position
     vim.cmd "silent !black --quiet %"
-    vim.cmd "edit"                       -- Reloads the buffer
-    vim.fn.setpos(".", cursor_pos)       -- Restore the cursor position
+    vim.cmd "edit" -- Reloads the buffer
+    vim.fn.setpos(".", cursor_pos) -- Restore the cursor position
   end,
 })
 
@@ -50,14 +50,44 @@ vim.api.nvim_create_user_command("Cppath", copy_file_path, {})
 function CloseBuffer()
   local current_buffer = vim.api.nvim_get_current_buf()
   -- Close the buffer
-  vim.cmd('bd')
+  vim.cmd "bd"
 
   -- Check if the buffer is unnamed and delete it
-  local bufnr = vim.fn.bufnr('%')
-  if vim.fn.bufname(bufnr) == '' then
-    vim.cmd('bd ' .. bufnr)
+  local bufnr = vim.fn.bufnr "%"
+  if vim.fn.bufname(bufnr) == "" then
+    vim.cmd("bd " .. bufnr)
   end
 end
 
 -- Map the function to a command
-vim.api.nvim_create_user_command('CloseBuf', CloseBuffer, {})
+vim.api.nvim_create_user_command("CloseBuf", CloseBuffer, {})
+
+vim.g.clipboard = {
+  name = "Clipboard",
+  copy = {
+    ["+"] = "clip.exe",
+    ["*"] = "clip.exe",
+  },
+  paste = {
+    ["+"] = "powershell.exe -c Get-Clipboard",
+    ["*"] = "powershell.exe -c Get-Clipboard",
+  },
+  cache_enabled = true,
+}
+
+-- Map to system clipboard
+vim.g.clipboard = {
+  name = "win32yank-wsl",
+  copy = {
+    ["+"] = "win32yank.exe -i --crlf",
+    ["*"] = "win32yank.exe -i --crlf",
+  },
+  paste = {
+    ["+"] = "win32yank.exe -o --lf",
+    ["*"] = "win32yank,exe -o --lf",
+  },
+  cache_enabled = true,
+}
+
+-- Use fzf in Vim
+vim.opt.runtimepath:append "/home/linuxbrew/.linuxbrew/opt/fzf"
